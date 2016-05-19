@@ -1,10 +1,374 @@
+/**
+ * Merge two objects into a new object. Does not modify either object.
+ * http://stackoverflow.com/a/171256
+ */
+function merge(obj1, obj2){
+  var obj3 = {};
+  for(var attr in obj1){ obj3[attr] = obj1[attr]; }
+  for(var attr in obj2){ obj3[attr] = obj2[attr]; }
+  return obj3;
+}
+
+var ExtensibleDataProperties = {
+    id: { type: 'string' }
+  }, ConclusionProperties = merge(ExtensibleDataProperties, {
+    analysis: { $ref: '/definitions/ResourceReference' },
+    attribution: { $ref: '#/definitions/Attribution' },
+    confidence: { type: 'string' },
+    id: { type: 'string' },
+    lang: { type: 'string' },
+    notes: {
+      type: 'array',
+      items: { $ref: '#/definitions/Note' }
+    },
+    sources: {
+      type: 'array',
+      items: { $ref: '#/definitions/SourceReference' }
+    }
+  }),
+  SubjectProperties = merge(ConclusionProperties, {
+    evidence: {
+      type: 'array',
+      items: { $ref: 'EvidenceReference' }
+    },
+    extracted: { type: 'boolean' },
+    identifiers: { $ref: 'Identifier' },
+    media: {
+      type: 'array',
+      items: { $ref: 'SourceReference' }
+    }
+  });
+
 module.exports = {
-  $schema: "http://json-schema.org/draft-04/schema#",
-  title: "GEDCOM X",
-  type: "object",
-  properties: {
+  $schema: 'http://json-schema.org/draft-04/schema#',
+  title: 'GEDCOM X',
+  type: 'object',
+  properties: merge(ExtensibleDataProperties, {
+    id: { type: 'string' },
+    lang: { type: 'string' },
+    attribution: { $ref: '#/definitions/Attribution' }, 
     persons: {
-      type: "array"
+      type: 'array',
+      items: { $ref: '#/definitions/Person' }
+    },
+    relationships: {
+      type: 'array',
+      items: { $ref: '#/definitions/Relationship' }
+    },
+    sourceDescriptions: {
+      type: 'array',
+      items: { $ref: '#/definitions/SourceDescription' }
+    },
+    agents: {
+      type: 'array',
+      items: { $ref: '#/definitions/Agent' }
+    },
+    events: {
+      type: 'array',
+      items: { $ref: '#/definitions/Event' }
+    },
+    documents: {
+      type: 'array',
+      items: { $ref: '#/definitions/Document' }
+    },
+    places: {
+      type: 'array',
+      items: { $ref: '#/definitions/PlaceDescription' }
+    },
+    description: { type: 'string' }
+  }),
+  definitions: {
+    Address: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        city: { type: 'string' },
+        country: { type: 'string' },
+        postalCode: { type: 'string' },
+        stateOrProvince: { type: 'string' },
+        street: { type: 'string' },
+        stree2: { type: 'string' },
+        street3: { type: 'string' },
+        street4: { type: 'string' },
+        street5: { type: 'string' },
+        street6: { type: 'string' },
+        value: { type: 'string' }
+      })
+    },
+    Agent: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        identifiers: { $ref: '#/definitions/Identifier' },
+        names: {
+          type: 'array',
+          items: { $ref: '#/definitions/TextValue' },
+        },
+        homepage: { $ref: '#/definitions/ResourceReference' },
+        openid: { $ref: '#/definitions/ResourceReference' },
+        accounts: {
+          type: 'array',
+          items: { $ref: '#/definitions/OnlineAccount' }
+        },
+        emails: {
+          type: 'array',
+          items: { $ref: '#/definitions/ResourceReference' }
+        },
+        phones: {
+          type: 'array',
+          items: { $ref: '#/definitions/ResourceReference' }
+        },
+        addresses: {
+          type: 'array',
+          items: { $ref: '#/definitions/Address' }
+        },
+        person: { $ref: '#/definitions/ResourceReference' }
+      })
+    },
+    Attribution: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        contributor: { $ref: '#/definitions/ResourceReference' },
+        modified: { type: 'integer' },
+        changeMessage: { type: 'string' },
+        creator: { $ref: '#/definitions/ResourceReference' },
+        created: { type: 'integer' }
+      })
+    },
+    Coverage: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        spatial: { $ref: '#/definitions/PlaceReference' },
+        temporal: { $ref: '#/definitions/Date' }
+      })
+    },
+    Date: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        original: { type: 'string' },
+        formal: { type: 'string' }
+      })
+    },
+    Event: {
+      type: 'object',
+      properties: merge(SubjectProperties, {
+        type: { type: 'string' },
+        date: { $ref: '#/definitions/Date' },
+        place: { $ref: '#/definitions/PlaceReference' },
+        roles: {
+          type: 'array',
+          items: { $ref: '#/definitions/EventRole' }
+        }
+      }),
+    },
+    EventRole: {
+      type: 'object',
+      properties: merge(ConclusionProperties, {
+        person: { $ref: '#/definitions/ResourceReference' },
+        type: { type: 'string' },
+        details: { type: 'string' }
+      })
+    },
+    EvidenceReference: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        resource: { type: 'string' },
+        attribution: { $ref: '#/definitions/Attribution' }
+      })
+    },
+    Fact: {
+      type: 'object',
+      properties: merge(ConclusionProperties, {
+        type: { type: 'string' },
+        date: { $ref: '#/definitions/Date' },
+        place: { $ref: '#/definitions/PlaceReference' },
+        value: { type: 'string' },
+        qualifiers: {
+          type: 'array',
+          items: { $ref: '#/definitions/Qualifier' }
+        }
+      })
+    },
+    Gender: {
+      type: 'object',
+      properties: merge(ConclusionProperties, {
+        type: { type: 'string' }
+      })
+    },
+    Identifier: {
+      type: 'object',
+      patternProperties: {
+        ".*": {
+          anyOf: [
+            { type: 'string' },
+            { type: 'array', items: { type: 'string' } }
+          ]
+        }
+      }
+    },
+    Name: {
+      type: 'object',
+      properties: merge(ConclusionProperties, {
+        type: { type: 'string' },
+        date: { $ref: '#/definitions/Date' },
+        nameForms: {
+          type: 'array',
+          items: { $ref: '#/definitions/NameForm' }
+        }
+      })
+    },
+    NameForm: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        lang: { type: 'string' },
+        fullText: { type: 'string' },
+        parts: {
+          type: 'array',
+          items: { $ref: '#/definitions/NamePart' }
+        }
+      })
+    },
+    NamePart: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        type: { type: 'string' },
+        value: { type: 'string' },
+        qualifiers: {
+          type: 'array',
+          items: { $ref: '#/definitions/Qualifier' }
+        }
+      })
+    },
+    OnlineAccount: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        serviceHomePage: { $ref: '#/definitions/ResourceReference' },
+        accountName: { type: 'string' }
+      })
+    },
+    Person: {
+      type: 'object',
+      properties: merge(SubjectProperties, {
+        private: { type: 'boolean' },
+        gender: { $ref: '#/definitions/Gender' },
+        names: {
+          type: 'array',
+          items: { $ref: '#/definitions/Name' }
+        },
+        facts: {
+          type: 'array',
+          items: { $ref: '#/definitions/Fact' }
+        }
+      })
+    },
+    PlaceDescription: {
+      type: 'object',
+      properties: merge(SubjectProperties, {
+        names: {
+          type: 'array',
+          items: { $ref: '#/definitions/TextValue' }
+        },
+        type: { type: 'string' },
+        place: { $ref: '#/definitions/ResourceReference' },
+        jurisdiction: { $ref: '#/definitions/ResourceReference' },
+        latitude: { type: 'number' },
+        longitude: { type: 'number' },
+        temporalDescription: { $ref: '#/definitions/Date' },
+        spatialDescription: { $ref: '#/definitions/ResourceReference' }
+      })
+    },
+    PlaceReference: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        original: { type: 'string' },
+        description: { type: 'string' }
+      })
+    },
+    Qualifier: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        value: { type: 'string' }
+      },
+      required: ['name']
+    },
+    Relationship: {
+      type: 'object',
+      properties: merge(SubjectProperties, {
+        type: { type: 'string' },
+        person1: { $ref: '#/definitions/ResourceReference' },
+        person2: { $ref: '#/definitions/ResourceReference' },
+        facts: {
+          type: 'array',
+          items: { $ref: '#/definitions/Fact' }
+        }
+      })
+    },
+    ResourceReference: {
+      type: 'object',
+      properties: {
+        resource: { type: 'string' }
+      }
+    },
+    SourceDescription: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        resourceType: { type: 'string' },
+        citations: {
+          type: 'array',
+          items: { $ref: '#/definitions/SourceCitation' }
+        },
+        mediaType: { type: 'string' },
+        about: { type: 'string' },
+        mediator: { $ref: '#/definitions/ResourceReference' },
+        sources: {
+          type: 'array',
+          items: { $ref: 'SourceReference' }
+        },
+        analysis: { $ref: '#/definitions/ResourceReference' },
+        componentOf: { $ref: '#/definitions/ResourceReference' },
+        titles: {
+          type: 'array',
+          items: { $ref: '#/definitions/TextValue' }
+        },
+        notes: {
+          type: 'array',
+          items: { $ref: '#/definitions/Note' }
+        },
+        attribution: { $ref: '#/definitions/Attribution' },
+        rights: {
+          type: 'array',
+          items: { $ref: '#/definitions/ResourceReference' }
+        },
+        coverage: { $ref: '#/definitions/Coverage' },
+        descriptions: {
+          type: 'array',
+          items: { $ref: '#/definitions/TextValue' }
+        },
+        identifiers: { $ref: '#/definitions/Identifiers' },
+        created: { type: 'integer' },
+        modified: { type: 'integer' },
+        repository: { $ref: '#/definitions/ResourceReference' }
+      })
+    },
+    SourceCitation: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        lang: { type: 'string' },
+        value: { type: 'string' }
+      })
+    },
+    SourceReference: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        description: { type: 'string' },
+        attribution: { $ref: '#/definitions/Attribution' }
+      })
+    },
+    TextValue: {
+      type: 'object',
+      properties: {
+        lang: { type: 'string' },
+        value: { type: 'string' }
+      }
     }
   }
 };
