@@ -237,6 +237,15 @@ module.exports = {
         }
       })
     },
+    Note: {
+      type: 'object',
+      properties: merge(ExtensibleDataProperties, {
+        lang: { type: 'string' },
+        subject: { type: 'string' },
+        text: { type: 'string' },
+        attribution: { $ref: '/#definitions/Attribution' }
+      })
+    },
     OnlineAccount: {
       type: 'object',
       properties: merge(ExtensibleDataProperties, {
@@ -321,7 +330,7 @@ module.exports = {
         mediator: { $ref: '#/definitions/ResourceReference' },
         sources: {
           type: 'array',
-          items: { $ref: 'SourceReference' }
+          items: { $ref: '#/definitions/SourceReference' }
         },
         analysis: { $ref: '#/definitions/ResourceReference' },
         componentOf: { $ref: '#/definitions/ResourceReference' },
@@ -343,7 +352,7 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' }
         },
-        identifiers: { $ref: '#/definitions/Identifiers' },
+        identifiers: { $ref: '#/definitions/Identifier' },
         created: { type: 'integer' },
         modified: { type: 'integer' },
         repository: { $ref: '#/definitions/ResourceReference' }
