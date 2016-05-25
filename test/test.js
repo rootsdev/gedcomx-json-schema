@@ -122,6 +122,80 @@ it('validates', function(){
           resource: 'http://repository'
         }
       }
+    ],
+    agents: [
+      {
+        id: 'agent',
+        identifiers: {
+          $: 'ident'
+        },
+        names: [
+          {
+            lang: 'en',
+            value: 'Name'
+          }  
+        ],
+        homepage: {
+          resource: 'http://homepage'
+        },
+        openid: {
+          resource: 'http://openid'
+        },
+        accounts: [
+          {
+            accountName: 'jimbo'
+          }  
+        ],
+        emails: [
+          {
+            resource: 'http://email'
+          }  
+        ],
+        phones: [
+          {
+            resource: 'http://phone'
+          }  
+        ],
+        addresses: [
+          {
+            value: 'big long address',
+            postalCode: '123456'
+          }  
+        ],
+        person: {
+          resource: 'http://person'
+        }
+      }  
+    ],
+    events: [
+      {
+        type: 'http://gedcomx.org/Marriage',
+        date: {
+          formal: '+2002-06-06'
+        },
+        place: {
+          original: 'Her town, MN'
+        },
+        roles: [
+          {
+            person: {
+              resource: 'http://groom'
+            },
+            type: 'http://gedcomx.org/Participant'
+          }
+        ]
+      }  
+    ],
+    documents: [
+      {
+        type: 'http://gedcomx.org/Abstract',
+        extracted: false,
+        textType: 'plain',
+        text: 'Lots of text',
+        attribution: {
+          created: 123456789
+        }
+      }  
     ]
   }, gedxSchema);
 });

@@ -147,6 +147,16 @@ module.exports = {
         formal: { type: 'string' }
       })
     },
+    Document: {
+      type: 'object',
+      properties: merge(ConclusionProperties, {
+        type: { type: 'string' },
+        extracted: { type: 'boolean' },
+        textType: { type: 'string' },
+        text: { type: 'string' },
+        attribution: { $ref: '#/definitions/Attribution' }
+      })
+    },
     Event: {
       type: 'object',
       properties: merge(SubjectProperties, {
