@@ -9,9 +9,16 @@ function merge(obj1, obj2){
   return obj3;
 }
 
+// Here we list the definitions that will be extended below.
 var ExtensibleDataProperties = {
     id: { type: 'string' }
-  }, ConclusionProperties = merge(ExtensibleDataProperties, {
+  },
+  
+  HypermediaEnabledDataProperties = merge(ExtensibleDataProperties, {
+    links: { $ref: '#/definitions/Links' }
+  }), 
+  
+  ConclusionProperties = merge(HypermediaEnabledDataProperties, {
     analysis: { $ref: '/definitions/ResourceReference' },
     attribution: { $ref: '#/definitions/Attribution' },
     confidence: { type: 'string' },
@@ -26,6 +33,7 @@ var ExtensibleDataProperties = {
       items: { $ref: '#/definitions/SourceReference' }
     }
   }),
+  
   SubjectProperties = merge(ConclusionProperties, {
     evidence: {
       type: 'array',
@@ -39,11 +47,12 @@ var ExtensibleDataProperties = {
     }
   });
 
+// The core definitions
 module.exports = {
   $schema: 'http://json-schema.org/draft-04/schema#',
   title: 'GEDCOM X',
   type: 'object',
-  properties: merge(ExtensibleDataProperties, {
+  properties: merge(HypermediaEnabledDataProperties, {
     id: { type: 'string' },
     lang: { type: 'string' },
     attribution: { $ref: '#/definitions/Attribution' }, 
@@ -96,7 +105,7 @@ module.exports = {
     },
     Agent: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      properties: merge(HypermediaEnabledDataProperties, {
         identifiers: { $ref: '#/definitions/Identifier' },
         names: {
           type: 'array',
@@ -135,7 +144,7 @@ module.exports = {
     },
     Coverage: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      properties: merge(HypermediaEnabledDataProperties, {
         spatial: { $ref: '#/definitions/PlaceReference' },
         temporal: { $ref: '#/definitions/Date' }
       })
@@ -179,7 +188,7 @@ module.exports = {
     },
     EvidenceReference: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      properties: merge(HypermediaEnabledDataProperties, {
         resource: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' }
       })
@@ -212,6 +221,25 @@ module.exports = {
             { type: 'array', items: { type: 'string' } }
           ]
         }
+      }
+    },
+    Link: {
+      type: 'object',
+      properties: {
+        rel: { type: 'string' },
+        href: { type: 'string' },
+        template: { type: 'string' },
+        type: { type: 'string' },
+        accept: { type: 'string' },
+        allow: { type: 'string' },
+        hreflang: { type: 'string' },
+        title: { type: 'string' }
+      }
+    },
+    Links: {
+      type: 'object',
+      patternProperties: {
+        ".*": { $ref: '#/definitions/Link' }
       }
     },
     Name: {
@@ -327,9 +355,16 @@ module.exports = {
         resource: { type: 'string' }
       }
     },
+    SourceCitation: {
+      type: 'object',
+      properties: merge(HypermediaEnabledDataProperties, {
+        lang: { type: 'string' },
+        value: { type: 'string' }
+      })
+    },
     SourceDescription: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      properties: merge(HypermediaEnabledDataProperties, {
         resourceType: { type: 'string' },
         citations: {
           type: 'array',
@@ -368,16 +403,9 @@ module.exports = {
         repository: { $ref: '#/definitions/ResourceReference' }
       })
     },
-    SourceCitation: {
-      type: 'object',
-      properties: merge(ExtensibleDataProperties, {
-        lang: { type: 'string' },
-        value: { type: 'string' }
-      })
-    },
     SourceReference: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      properties: merge(HypermediaEnabledDataProperties, {
         description: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' }
       })

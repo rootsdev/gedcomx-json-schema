@@ -32,6 +32,78 @@ it('validates', function(){
               original: 'Farm house'
             }
           }  
+        ],
+        links: {
+          "spouses" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/spouses"
+          },
+          "ancestry" : {
+            "href" : "https://familysearch.org/platform/tree/ancestry?person=KWXX-MP9"
+          },
+          "person" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9"
+          },
+          "parents" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/parents"
+          },
+          "person-with-relationships" : {
+            "href" : "https://familysearch.org/platform/tree/persons-with-relationships?person=KWXX-MP9"
+          },
+          "descendancy" : {
+            "href" : "https://familysearch.org/platform/tree/descendancy?person=KWXX-MP9"
+          },
+          "merge" : {
+            "template" : "https://familysearch.org/platform/tree/persons/{pid}/merges/{dpid}{?filter,access_token}",
+            "type" : "application/json,application/x-fs-v1+json,application/x-fs-v1+xml,application/xml,text/html",
+            "accept" : "application/x-fs-v1+json,application/x-fs-v1+xml",
+            "allow" : "OPTIONS,GET,POST",
+            "title" : "Person Merge"
+          },
+          "change-history" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/changes"
+          },
+          "children" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/children"
+          },
+          "spouse-relationships" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/spouse-relationships"
+          },
+          "child-relationships" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/child-relationships"
+          },
+          "collection" : {
+            "href" : "https://familysearch.org/platform/collections/tree"
+          },
+          "ordinance-reservations" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/reservations"
+          },
+          "portrait" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/portrait"
+          },
+          "parent-relationships" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/parent-relationships"
+          },
+          "artifacts" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/memories"
+          },
+          "matches" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/matches"
+          },
+          "ordinances" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/ordinances"
+          },
+          "non-matches" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/not-a-match"
+          },
+          "portraits" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/portraits"
+          },
+          "notes" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/notes"
+          },
+          "source-descriptions" : {
+            "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/sources"
+          }
         ]
       } 
     ],
