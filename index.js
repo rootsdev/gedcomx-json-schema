@@ -166,6 +166,30 @@ module.exports = {
         attribution: { $ref: '#/definitions/Attribution' }
       })
     },
+    DisplayProperties: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        gender: { type: 'string' },
+        lifespan: { type: 'string' },
+        birthDate: { type: 'string' },
+        birthPlace: { type: 'string' },
+        deathDate: { type: 'string' },
+        deathPlace: { type: 'string' },
+        marriageDate: { type: 'string' },
+        marriagePlace: { type: 'string' },
+        ascendancyNumber: { type: 'string' },
+        descendancyNumber: { type: 'string' },
+        familiesAsParent: {
+          type: 'array',
+          items: { $ref: '#/definitions/FamilyView' }
+        },
+        familiesAsChild: {
+          type: 'array',
+          items: { $ref: '#/definitions/FamilyView' }
+        }
+      }
+    },
     Event: {
       type: 'object',
       properties: merge(SubjectProperties, {
@@ -205,6 +229,17 @@ module.exports = {
           items: { $ref: '#/definitions/Qualifier' }
         }
       })
+    },
+    FamilyView: {
+      type: 'object',
+      properties: {
+        parent1: { $ref: '#/definitions/ResourceReference' },
+        parent2: { $ref: '#/definitions/ResourceReference' },
+        children: {
+          type: 'array',
+          items: { $ref: '#/definitions/ResourceReference' }
+        }
+      }
     },
     Gender: {
       type: 'object',

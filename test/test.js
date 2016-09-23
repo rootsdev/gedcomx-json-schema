@@ -33,6 +33,48 @@ it('validates', function(){
             }
           }  
         ],
+        "display" : {
+          "name" : "Helen Gertrude Zierak",
+          "gender" : "Female",
+          "lifespan" : "1896-1970",
+          "birthDate" : "7 February 1896",
+          "birthPlace" : "Amsterdam, Montgomery, New York, United States",
+          "deathDate" : "24 November 1970",
+          "deathPlace" : "Tacoma, Pierce, Washington, United States",
+          "ascendancyNumber" : "1",
+          "descendancyNumber" : "1",
+          "familiesAsParent" : [ {
+            "parent1" : {
+              "resource" : "https://familysearch.org/ark:/61903/4:1:K1VK-9VB",
+              "resourceId" : "K1VK-9VB"
+            },
+            "parent2" : {
+              "resource" : "#K1VK-9B3",
+              "resourceId" : "K1VK-9B3"
+            },
+            "children" : [ {
+              "resource" : "https://familysearch.org/ark:/61903/4:1:K66W-QDT",
+              "resourceId" : "K66W-QDT"
+            }, {
+              "resource" : "https://familysearch.org/ark:/61903/4:1:LZX4-YHK",
+              "resourceId" : "LZX4-YHK"
+            } ]
+          } ],
+          "familiesAsChild" : [ {
+            "parent1" : {
+              "resource" : "https://familysearch.org/ark:/61903/4:1:LWMS-5MF",
+              "resourceId" : "LWMS-5MF"
+            },
+            "parent2" : {
+              "resource" : "https://familysearch.org/ark:/61903/4:1:LWMS-R9Y",
+              "resourceId" : "LWMS-R9Y"
+            },
+            "children" : [ {
+              "resource" : "#K1VK-9B3",
+              "resourceId" : "K1VK-9B3"
+            } ]
+          } ]
+        },
         links: {
           "spouses" : {
             "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/spouses"
@@ -104,7 +146,7 @@ it('validates', function(){
           "source-descriptions" : {
             "href" : "https://familysearch.org/platform/tree/persons/KWXX-MP9/sources"
           }
-        ]
+        }
       } 
     ],
     relationships: [
