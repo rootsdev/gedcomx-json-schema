@@ -19,7 +19,7 @@ var ExtensibleDataProperties = {
   }), 
   
   ConclusionProperties = merge(HypermediaEnabledDataProperties, {
-    analysis: { $ref: '/definitions/ResourceReference' },
+    analysis: { $ref: '#/definitions/ResourceReference' },
     attribution: { $ref: '#/definitions/Attribution' },
     confidence: { type: 'string' },
     id: { type: 'string' },
@@ -31,19 +31,20 @@ var ExtensibleDataProperties = {
     sources: {
       type: 'array',
       items: { $ref: '#/definitions/SourceReference' }
-    }
+    },
+    sortKey: { type: 'string' }
   }),
   
   SubjectProperties = merge(ConclusionProperties, {
     evidence: {
       type: 'array',
-      items: { $ref: 'EvidenceReference' }
+      items: { $ref: '#/definitions/EvidenceReference' }
     },
     extracted: { type: 'boolean' },
-    identifiers: { $ref: 'Identifier' },
+    identifiers: { $ref: '#/definitions/Identifiers' },
     media: {
       type: 'array',
-      items: { $ref: 'SourceReference' }
+      items: { $ref: '#/definitions/SourceReference' }
     }
   });
 
@@ -106,7 +107,7 @@ module.exports = {
     Agent: {
       type: 'object',
       properties: merge(HypermediaEnabledDataProperties, {
-        identifiers: { $ref: '#/definitions/Identifier' },
+        identifiers: { $ref: '#/definitions/Identifiers' },
         names: {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' },
@@ -153,7 +154,11 @@ module.exports = {
       type: 'object',
       properties: merge(ExtensibleDataProperties, {
         original: { type: 'string' },
-        formal: { type: 'string' }
+        formal: { type: 'string' },
+        normalized: {
+          type: 'array',
+          items: { $ref: '#/definitions/TextValue' }
+        }
       })
     },
     Document: {
@@ -247,7 +252,7 @@ module.exports = {
         type: { type: 'string' }
       })
     },
-    Identifier: {
+    Identifiers: {
       type: 'object',
       patternProperties: {
         ".*": {
@@ -285,7 +290,8 @@ module.exports = {
         nameForms: {
           type: 'array',
           items: { $ref: '#/definitions/NameForm' }
-        }
+        },
+        preferred: { type: 'boolean' }
       })
     },
     NameForm: {
@@ -338,7 +344,9 @@ module.exports = {
         facts: {
           type: 'array',
           items: { $ref: '#/definitions/Fact' }
-        }
+        },
+        living: { type: 'boolean' },
+        display: { $ref: '#/definitions/DisplayProperties' }
       })
     },
     PlaceDescription: {
@@ -361,7 +369,11 @@ module.exports = {
       type: 'object',
       properties: merge(ExtensibleDataProperties, {
         original: { type: 'string' },
-        description: { type: 'string' }
+        description: { type: 'string' },
+        normalized: {
+          type: 'array',
+          items: { $ref: '#/definitions/TextValue' }
+        }
       })
     },
     Qualifier: {
