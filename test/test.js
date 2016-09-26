@@ -1,5 +1,6 @@
 var chai = require('chai');
 chai.use(require('chai-json-schema'));
+// chai.tv4.banUnknown = true;
 var assert = chai.assert;
 var gedxSchema = require('../');
 

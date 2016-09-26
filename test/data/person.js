@@ -64,10 +64,7 @@ module.exports = {
         },
         "modified" : 1453590504626
       },
-      "description" : "https://familysearch.org/platform/sources/descriptions/962V-9BF",
-      "tags" : [ {
-        "resource" : "http://gedcomx.org/Death"
-      } ]
+      "description" : "https://familysearch.org/platform/sources/descriptions/962V-9BF"
     }, {
       "id" : "4201805c-d80d-4019-a77a-aeb1f3f65337",
       "attribution" : {
@@ -77,16 +74,7 @@ module.exports = {
         },
         "modified" : 1408024717918
       },
-      "description" : "https://familysearch.org/platform/sources/descriptions/MSJ3-944",
-      "tags" : [ {
-        "resource" : "http://gedcomx.org/Christening"
-      }, {
-        "resource" : "http://gedcomx.org/Gender"
-      }, {
-        "resource" : "http://gedcomx.org/Name"
-      }, {
-        "resource" : "http://gedcomx.org/Birth"
-      } ]
+      "description" : "https://familysearch.org/platform/sources/descriptions/MSJ3-944"
     }, {
       "id" : "447e19d0-309c-4b14-adce-1df688079951",
       "attribution" : {
@@ -96,14 +84,7 @@ module.exports = {
         },
         "modified" : 1393958564090
       },
-      "description" : "https://familysearch.org/platform/sources/descriptions/MMKF-FJJ",
-      "tags" : [ {
-        "resource" : "http://gedcomx.org/Gender"
-      }, {
-        "resource" : "http://gedcomx.org/Name"
-      }, {
-        "resource" : "http://gedcomx.org/Birth"
-      } ]
+      "description" : "https://familysearch.org/platform/sources/descriptions/MMKF-FJJ"
     }, {
       "id" : "197b3649-e180-43af-ad7a-783e0c31ca4a",
       "attribution" : {

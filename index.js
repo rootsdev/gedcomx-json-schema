@@ -194,6 +194,7 @@ module.exports = {
       type: 'object',
       properties: merge(HypermediaEnabledDataProperties, {
         resource: { type: 'string' },
+        resourceId: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' }
       })
     },
@@ -411,7 +412,8 @@ module.exports = {
     ResourceReference: {
       type: 'object',
       properties: {
-        resource: { type: 'string' }
+        resource: { type: 'string' },
+        resourceId: { type: 'string' }
       }
     },
     SourceCitation: {
@@ -437,7 +439,7 @@ module.exports = {
           items: { $ref: '#/definitions/SourceReference' }
         },
         analysis: { $ref: '#/definitions/ResourceReference' },
-        componentOf: { $ref: '#/definitions/ResourceReference' },
+        componentOf: { $ref: '#/definitions/SourceReference' },
         titles: {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' }
