@@ -11,7 +11,11 @@ function merge(obj1, obj2){
 
 // Here we list the definitions that will be extended below.
 var ExtensibleDataProperties = {
-    id: { type: 'string' }
+    id: { type: 'string' },
+    fields: {
+      type: 'array',
+      items: { $ref: '#/definitions/Field' }
+    }
   },
   
   HypermediaEnabledDataProperties = merge(ExtensibleDataProperties, {
@@ -58,7 +62,7 @@ module.exports = {
   $schema: 'http://json-schema.org/draft-04/schema#',
   anyOf: [
     { $ref: '#/definitions/GedcomX' },
-    { $ref: '#/definitions/AtomFeed' }
+    // { $ref: '#/definitions/AtomFeed' }
   ],
   definitions: {
     
@@ -122,8 +126,10 @@ module.exports = {
       type: 'object',
       properties: merge(HypermediaEnabledDataProperties, {
         spatial: { $ref: '#/definitions/PlaceReference' },
-        temporal: { $ref: '#/definitions/Date' }
-      })
+        temporal: { $ref: '#/definitions/Date' },
+        recordType: { type: 'string' }
+      }),
+      required: ['recordType']
     },
     Date: {
       type: 'object',
@@ -184,13 +190,13 @@ module.exports = {
         qualifiers: {
           type: 'array',
           items: { $ref: '#/definitions/Qualifier' }
-        }
+        },
+        primary: { type: 'boolean' }
       })
     },
     GedcomX: {
       type: 'object',
       properties: merge(HypermediaEnabledDataProperties, {
-        id: { type: 'string' },
         lang: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' }, 
         persons: {
@@ -221,7 +227,15 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/PlaceDescription' }
         },
-        description: { type: 'string' }
+        description: { type: 'string' },
+        collections: {
+          type: 'array',
+          items: { $ref: '#/definitions/Collection' }
+        },
+        recordDescriptors: {
+          type: 'array',
+          items: { $ref: '#/definitions/RecordDescriptor' }
+        }
       })
     },
     Gender: {
@@ -305,7 +319,8 @@ module.exports = {
           items: { $ref: '#/definitions/Fact' }
         },
         living: { type: 'boolean' },
-        display: { $ref: '#/definitions/DisplayProperties' }
+        display: { $ref: '#/definitions/DisplayProperties' },
+        principal: { type: 'boolean' }
       })
     },
     PlaceDescription: {
@@ -407,14 +422,21 @@ module.exports = {
         identifiers: { $ref: '#/definitions/Identifiers' },
         created: { type: 'integer' },
         modified: { type: 'integer' },
-        repository: { $ref: '#/definitions/ResourceReference' }
+        repository: { $ref: '#/definitions/ResourceReference' },
+        titleLabel: { type: 'string' },
+        sortKey: { type: 'string' },
+        descriptorRef: { $ref: '#/definitions/ResourceReference' }
       })
     },
     SourceReference: {
       type: 'object',
       properties: merge(HypermediaEnabledDataProperties, {
         description: { type: 'string' },
-        attribution: { $ref: '#/definitions/Attribution' }
+        attribution: { $ref: '#/definitions/Attribution' },
+        qualifiers: {
+          type: 'array',
+          items: { $ref: '#/definitions/Qualifier' }
+        }
       })
     },
     TextValue: {
@@ -479,6 +501,88 @@ module.exports = {
           items: { $ref: '#/definitions/ResourceReference' }
         }
       }
+    },
+    
+    // GedcomX Records
+    Collection: {
+      type: 'object',
+      properties: merge(HypermediaEnabledDataProperties, {
+        lang: { type: 'string' },
+        identifiers: { $ref: '#/definitions/Identifiers' },
+        title: { type: 'string' },
+        size: { type: 'integer' },
+        content: {
+          type: 'array',
+          items: { $ref: '#/definitions/CollectionContent' }
+        },
+        attribute: { $ref: '#/definitions/Attribution' }
+      })
+    },
+    CollectionContent: {
+      type: 'object',
+      properties: merge(HypermediaEnabledDataProperties, {
+        completeness: { type: 'number' },
+        count: { type: 'integer' },
+        resourceType: { type: 'string' }
+      }),
+      required: ['resourceType']
+    },
+    Field: {
+      type: 'object',
+      properties: merge(HypermediaEnabledDataProperties, {
+        type: { type: 'string' },
+        values: {
+          type: 'array',
+          items: { $ref: '#/definitions/FieldValue' }
+        }
+      })
+    },
+    FieldValue: {
+      type: 'object',
+      properties: merge(ConclusionProperties, {
+        resource: { type: 'string' },
+        dataType: { type: 'string' },
+        type: { type: 'string' },
+        labelId: { type: 'string' },
+        status: { type: 'string' },
+        text: { type: 'string' }
+      })
+    },
+    RecordDescriptor: {
+      type: 'object',
+      properties: merge(HypermediaEnabledDataProperties, {
+        lang: { type: 'string' },
+        fields: {
+          type: 'array',
+          items: { $ref: '#/definitions/FieldDescriptor' }
+        }
+      })
+    },
+    FieldDescriptor: {
+      type: 'object',
+      properties: merge(HypermediaEnabledDataProperties, {
+        originalLabel: { type: 'string' },
+        descriptions: {
+          type: 'array',
+          items: { $ref: '#/definitions/TextValue' }
+        },
+        values: {
+          type: 'array',
+          items: { $ref: '#/definitions/FieldValueDescriptor' }
+        }
+      })
+    },
+    FieldValueDescriptor: {
+      type: 'object',
+      properties: merge(HypermediaEnabledDataProperties, {
+        optional: { type: 'boolean' },
+        type: { type: 'string' },
+        labelId: { type: 'string' },
+        labels: {
+          type: 'array',
+          items: { $ref: '#/definitons/TextValue' }
+        }
+      })
     },
     
     // Atom Extensions

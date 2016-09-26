@@ -9,7 +9,11 @@ it('validates GedcomX Document', function(){
 });
 
 it('validates Atom Feed', function(){
-  assert.jsonSchema(require('./data/person-changes.js'), gedxSchema);
+  assert.jsonSchema(require('./data/feed.js'), gedxSchema);
+});
+
+it.only('validates Record', function(){
+  assert.jsonSchema(require('./data/record.js'), gedxSchema);
 });
 
 it('fails', function(){
