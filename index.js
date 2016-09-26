@@ -458,7 +458,7 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' }
         },
-        identifiers: { $ref: '#/definitions/Identifier' },
+        identifiers: { $ref: '#/definitions/Identifiers' },
         created: { type: 'integer' },
         modified: { type: 'integer' },
         repository: { $ref: '#/definitions/ResourceReference' }
