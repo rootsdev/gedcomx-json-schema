@@ -22,7 +22,7 @@
   "homepage": "https://github.com/rootsdev/gedcomx-json-schema#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.4.5",
-    "chai-json-schema": "chaijs/chai-json-schema#85ebeb3a98"
+    "mocha": "^3.0.2",
+    "chai-json-schema": "^1.3.0"
   }
 }
