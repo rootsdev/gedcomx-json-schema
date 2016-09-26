@@ -3,9 +3,9 @@
  * http://stackoverflow.com/a/171256
  */
 function merge(obj1, obj2){
-  var obj3 = {};
-  for(var attr in obj1){ obj3[attr] = obj1[attr]; }
-  for(var attr in obj2){ obj3[attr] = obj2[attr]; }
+  var obj3 = {}, attr;
+  for(attr in obj1){ obj3[attr] = obj1[attr]; }
+  for(attr in obj2){ obj3[attr] = obj2[attr]; }
   return obj3;
 }
 
@@ -46,48 +46,23 @@ var ExtensibleDataProperties = {
       type: 'array',
       items: { $ref: '#/definitions/SourceReference' }
     }
-  });
+  }),
+  
+  AtomCommonAttributes = {
+    base: { type: 'string' },
+    lang: { type: 'string' }
+  };
 
 // The core definitions
 module.exports = {
   $schema: 'http://json-schema.org/draft-04/schema#',
-  title: 'GEDCOM X',
-  type: 'object',
-  properties: merge(HypermediaEnabledDataProperties, {
-    id: { type: 'string' },
-    lang: { type: 'string' },
-    attribution: { $ref: '#/definitions/Attribution' }, 
-    persons: {
-      type: 'array',
-      items: { $ref: '#/definitions/Person' }
-    },
-    relationships: {
-      type: 'array',
-      items: { $ref: '#/definitions/Relationship' }
-    },
-    sourceDescriptions: {
-      type: 'array',
-      items: { $ref: '#/definitions/SourceDescription' }
-    },
-    agents: {
-      type: 'array',
-      items: { $ref: '#/definitions/Agent' }
-    },
-    events: {
-      type: 'array',
-      items: { $ref: '#/definitions/Event' }
-    },
-    documents: {
-      type: 'array',
-      items: { $ref: '#/definitions/Document' }
-    },
-    places: {
-      type: 'array',
-      items: { $ref: '#/definitions/PlaceDescription' }
-    },
-    description: { type: 'string' }
-  }),
+  anyOf: [
+    { $ref: '#/definitions/GedcomX' },
+    { $ref: '#/definitions/AtomFeed' }
+  ],
   definitions: {
+    
+    // GedcomX Core Conceptual Model
     Address: {
       type: 'object',
       properties: merge(ExtensibleDataProperties, {
@@ -245,6 +220,43 @@ module.exports = {
           items: { $ref: '#/definitions/ResourceReference' }
         }
       }
+    },
+    GedcomX: {
+      type: 'object',
+      properties: merge(HypermediaEnabledDataProperties, {
+        id: { type: 'string' },
+        lang: { type: 'string' },
+        attribution: { $ref: '#/definitions/Attribution' }, 
+        persons: {
+          type: 'array',
+          items: { $ref: '#/definitions/Person' }
+        },
+        relationships: {
+          type: 'array',
+          items: { $ref: '#/definitions/Relationship' }
+        },
+        sourceDescriptions: {
+          type: 'array',
+          items: { $ref: '#/definitions/SourceDescription' }
+        },
+        agents: {
+          type: 'array',
+          items: { $ref: '#/definitions/Agent' }
+        },
+        events: {
+          type: 'array',
+          items: { $ref: '#/definitions/Event' }
+        },
+        documents: {
+          type: 'array',
+          items: { $ref: '#/definitions/Document' }
+        },
+        places: {
+          type: 'array',
+          items: { $ref: '#/definitions/PlaceDescription' }
+        },
+        description: { type: 'string' }
+      })
     },
     Gender: {
       type: 'object',
@@ -463,6 +475,99 @@ module.exports = {
         lang: { type: 'string' },
         value: { type: 'string' }
       }
+    },
+    
+    // Atom Extensions
+    AtomCategory: {
+      type: 'object',
+      properties: merge(AtomCommonAttributes, {
+        scheme: { type: 'string' },
+        term: { type: 'string' },
+        label: { type: 'string' }
+      })
+    },
+    AtomContent: {
+      type: 'object',
+      properties: {
+        type: { type: 'string' },
+        gedcomx: { $ref: '#/definitions/GedcomX' }
+      }
+    },
+    AtomEntry: {
+      type: 'object',
+      properties: merge(AtomCommonAttributes, {
+        authors: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomPerson' }
+        },
+        categories: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomCategory' }
+        },
+        confidence: { type: 'integer' },
+        content: { $ref: '#/definitions/AtomContent' },
+        contributors: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomPerson' }
+        },
+        id: { type: 'string' },
+        links: { $ref: '#/definitions/Links' },
+        published: { type: 'integer' },
+        rights: { type: 'string' },
+        score: { type: 'number' },
+        title: { type: 'string' },
+        updated: { type: 'integer' }
+      })
+    },
+    AtomFeed: {
+      type: 'object',
+      properties: merge(AtomCommonAttributes, {
+        authors: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomPerson' }
+        },
+        contributors: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomPerson' }
+        },
+        generator: { $ref: '#/definitions/AtomGenerator' },
+        icon: { type: 'string' },
+        id: { type: 'string' },
+        results: { type: 'integer' },
+        index: { type: 'integer' },
+        links: { $ref: '#/definitions/Links' },
+        logo: { type: 'string' },
+        rights: { type: 'string' },
+        subtitle: { type: 'string' },
+        title: { type: 'string' },
+        updated: { type: 'integer' },
+        entries: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomEntry' }
+        },
+        /*
+        facets: {
+          type: 'array',
+          items: { $ref: '#/definitions/Field' }
+        }
+        */
+      })
+    },
+    AtomGenerator: {
+      type: 'object',
+      properties: merge(AtomCommonAttributes, {
+        uri: { type: 'string' },
+        version: { type: 'string' },
+        value: { type: 'string' }
+      })
+    },
+    AtomPerson: {
+      type: 'object',
+      properties: merge(AtomCommonAttributes, {
+        name: { type: 'string' },
+        uri: { type: 'string' },
+        email: { type: 'string' }
+      })
     }
   }
 };
