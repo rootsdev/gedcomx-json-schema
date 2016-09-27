@@ -1,6 +1,6 @@
 var chai = require('chai');
 chai.use(require('chai-json-schema'));
-// chai.tv4.banUnknown = true;
+chai.tv4.banUnknown = true;
 var assert = chai.assert;
 var gedxSchema = require('../');
 
@@ -12,7 +12,7 @@ it('validates Atom Feed', function(){
   assert.jsonSchema(require('./data/feed.js'), gedxSchema);
 });
 
-it.only('validates Record', function(){
+it('validates Record', function(){
   assert.jsonSchema(require('./data/record.js'), gedxSchema);
 });
 

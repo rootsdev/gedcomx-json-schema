@@ -428,7 +428,7 @@ module.exports = {
         repository: { $ref: '#/definitions/ResourceReference' },
         titleLabel: { type: 'string' },
         sortKey: { type: 'string' },
-        descriptorRef: { $ref: '#/definitions/ResourceReference' }
+        descriptor: { $ref: '#/definitions/ResourceReference' }
       })
     },
     SourceReference: {

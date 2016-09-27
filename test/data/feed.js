@@ -49,12 +49,7 @@ module.exports = {
                                         },
                                         "modified": 1453590504626
                                     },
-                                    "description": "https://familysearch.org/platform/sources/descriptions/962V-9BF",
-                                    "tags": [
-                                        {
-                                            "resource": "http://gedcomx.org/Death"
-                                        }
-                                    ]
+                                    "description": "https://familysearch.org/platform/sources/descriptions/962V-9BF"
                                 }
                             ],
                             "identifiers": {
