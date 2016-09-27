@@ -62,7 +62,7 @@ module.exports = {
   $schema: 'http://json-schema.org/draft-04/schema#',
   anyOf: [
     { $ref: '#/definitions/GedcomX' },
-    // { $ref: '#/definitions/AtomFeed' }
+    { $ref: '#/definitions/AtomFeed' }
   ],
   definitions: {
     
@@ -414,7 +414,10 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/ResourceReference' }
         },
-        coverage: { $ref: '#/definitions/Coverage' },
+        coverage: { 
+          type: 'array',
+          items: { $ref: '#/definitions/Coverage' }
+        },
         descriptions: {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' }
