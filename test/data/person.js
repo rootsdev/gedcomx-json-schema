@@ -584,8 +584,7 @@ module.exports = {
     "identifiers" : {
       "http://gedcomx.org/Persistent" : [ "https://familysearch.org/ark:/61903/4:1:K1VK-9B3" ]
     },
-    "modified" : 1465517011000,
-    "version" : "136848098114480000"
+    "modified" : 1465517011000
   } ],
   "description" : "#SD-K1VK-9B3"
 };
