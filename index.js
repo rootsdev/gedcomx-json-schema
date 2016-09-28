@@ -15,14 +15,11 @@ var ExtensibleDataProperties = {
     fields: {
       type: 'array',
       items: { $ref: '#/definitions/Field' }
-    }
+    },
+    links: { $ref: '#/definitions/Links' }
   },
   
-  HypermediaEnabledDataProperties = merge(ExtensibleDataProperties, {
-    links: { $ref: '#/definitions/Links' }
-  }), 
-  
-  ConclusionProperties = merge(HypermediaEnabledDataProperties, {
+  ConclusionProperties = merge(ExtensibleDataProperties, {
     analysis: { $ref: '#/definitions/ResourceReference' },
     attribution: { $ref: '#/definitions/Attribution' },
     confidence: { type: 'string' },
@@ -85,7 +82,7 @@ module.exports = {
     },
     Agent: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         identifiers: { $ref: '#/definitions/Identifiers' },
         names: {
           type: 'array',
@@ -124,7 +121,7 @@ module.exports = {
     },
     Coverage: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         spatial: { $ref: '#/definitions/PlaceReference' },
         temporal: { $ref: '#/definitions/Date' },
         recordType: { type: 'string' }
@@ -174,7 +171,7 @@ module.exports = {
     },
     EvidenceReference: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         resource: { type: 'string' },
         resourceId: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' }
@@ -196,7 +193,7 @@ module.exports = {
     },
     GedcomX: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         lang: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' }, 
         persons: {
@@ -379,14 +376,14 @@ module.exports = {
     },
     SourceCitation: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         lang: { type: 'string' },
         value: { type: 'string' }
       })
     },
     SourceDescription: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         resourceType: { type: 'string' },
         citations: {
           type: 'array',
@@ -428,12 +425,13 @@ module.exports = {
         repository: { $ref: '#/definitions/ResourceReference' },
         titleLabel: { type: 'string' },
         sortKey: { type: 'string' },
-        descriptor: { $ref: '#/definitions/ResourceReference' }
+        descriptor: { $ref: '#/definitions/ResourceReference' },
+        version: { type: 'string' }
       })
     },
     SourceReference: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         description: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' },
         qualifiers: {
@@ -509,7 +507,7 @@ module.exports = {
     // GedcomX Records
     Collection: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         lang: { type: 'string' },
         identifiers: { $ref: '#/definitions/Identifiers' },
         title: { type: 'string' },
@@ -523,7 +521,7 @@ module.exports = {
     },
     CollectionContent: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         completeness: { type: 'number' },
         count: { type: 'integer' },
         resourceType: { type: 'string' }
@@ -532,7 +530,7 @@ module.exports = {
     },
     Field: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         type: { type: 'string' },
         values: {
           type: 'array',
@@ -553,7 +551,7 @@ module.exports = {
     },
     RecordDescriptor: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         lang: { type: 'string' },
         fields: {
           type: 'array',
@@ -563,7 +561,7 @@ module.exports = {
     },
     FieldDescriptor: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         originalLabel: { type: 'string' },
         descriptions: {
           type: 'array',
@@ -577,7 +575,7 @@ module.exports = {
     },
     FieldValueDescriptor: {
       type: 'object',
-      properties: merge(HypermediaEnabledDataProperties, {
+      properties: merge(ExtensibleDataProperties, {
         optional: { type: 'boolean' },
         type: { type: 'string' },
         labelId: { type: 'string' },
