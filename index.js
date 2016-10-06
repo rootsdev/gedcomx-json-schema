@@ -579,7 +579,7 @@ module.exports = {
         optional: { type: 'boolean' },
         type: { type: 'string' },
         labelId: { type: 'string' },
-        labels: {
+        displayLabels: {
           type: 'array',
           items: { $ref: '#/definitons/TextValue' }
         }
