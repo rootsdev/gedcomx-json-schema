@@ -568,24 +568,75 @@ module.exports = {
     }
   } ],
   "sourceDescriptions" : [ {
-    "id" : "SD-K1VK-9B3",
-    "citations" : [ {
-      "lang" : "en",
-      "value" : "\"Family Tree,\" database, <i>FamilySearch</i> (http://familysearch.org : modified 10 June 2016, 00:03), entry for Helen Gertrude Zierak(PID https://familysearch.org/ark:/61903/4:1:K1VK-9B3); contributed by various users."
-    } ],
-    "about" : "#K1VK-9B3",
-    "componentOf" : {
-      "description" : "https://familysearch.org/platform/collections/tree"
+    id: 'sd1',
+    resourceType: 'http://some/type',
+    citations: [
+      {
+        lang: 'en',
+        value: 'Long source citation'
+      }
+    ],
+    mediaType: 'book',
+    about: 'http://a/resource',
+    mediator: {
+      resource: 'http://mediator'
     },
-    "titles" : [ {
-      "value" : "Helen Gertrude Zierak"
-    } ],
-    "resourceType" : "http://gedcomx.org/Person",
-    "identifiers" : {
-      "http://gedcomx.org/Persistent" : [ "https://familysearch.org/ark:/61903/4:1:K1VK-9B3" ]
+    sources: [
+      {
+        description: 'http://source/reference'
+      }
+    ],
+    analysis: {
+      resource: 'http://analysis'
     },
-    "modified" : 1465517011000,
-    "version" : "136848098114480000"
+    componentOf: {
+      description: 'http://container'
+    },
+    titles: [
+      {
+        lang: 'en',
+        value: 'Title'
+      },
+      {
+        lang: 'es',
+        value: 'Titulo'
+      }
+    ],
+    notes: [
+      {
+        subject: 'Note',
+        text: 'Some note text'
+      }
+    ],
+    attribution: {
+      created: 1234578129
+    },
+    rights: [
+      {
+        resource: 'https://some/right'
+      }
+    ],
+    coverage: {
+      temporal: {
+        formal: '+2015'
+      },
+      spatial: {
+        original: 'A place'
+      }
+    },
+    descriptions: [
+      {
+        value: 'A description'
+      }
+    ],
+    identifiers: {
+      $: 'identifier'
+    },
+    created: 1000000,
+    modified: 11111111,
+    repository: {
+      resource: 'http://repository'
+    }
   } ],
   "description" : "#SD-K1VK-9B3"
 };
