@@ -512,7 +512,7 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/CollectionContent' }
         },
-        attribute: { $ref: '#/definitions/Attribution' }
+        attribution: { $ref: '#/definitions/Attribution' }
       })
     },
     CollectionContent: {

@@ -2365,5 +2365,24 @@ module.exports = {
       }]
     }
   ],
+  "collections": [
+    {
+      id: 'collection',
+      lang: 'en-US',
+      content: [{
+        resourceType: 'http://gedcomx.org/Record',
+        count: 183429102,
+        completeness: .8237
+      }],
+      title: 'Collection Title',
+      size: 183429102,
+      attribution: { 
+        contributor: { resource: 'https://myapp.com/contributor'},
+        created: 1111338494969,
+        creator: { resource: 'https://myapp.com/creator'},
+        modified: 1111338494969
+      }
+    }  
+  ],
   "description" : "#sd_p_13970104168"
 };
