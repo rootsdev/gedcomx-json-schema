@@ -577,7 +577,7 @@ module.exports = {
         labelId: { type: 'string' },
         displayLabels: {
           type: 'array',
-          items: { $ref: '#/definitons/TextValue' }
+          items: { $ref: '#/definitions/TextValue' }
         }
       })
     },

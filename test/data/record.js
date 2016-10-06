@@ -2342,5 +2342,28 @@ module.exports = {
       "text" : "000000000_005458659_00682_039_001551929832"
     } ]
   } ],
+  "recordDescriptors": [
+    {
+      id: 'rd',
+      lang: 'en-US',
+      fields: [{
+        originalLabel: 'Name',
+        descriptions: [
+          { lang: 'en-US', value: 'Full Name' }
+        ],
+        values: [{
+          optional: true,
+          type: 'http://gedcomx.org/Original',
+          labelId: 'name',
+          displayLabels: [
+            { 
+              lang: 'en-US', 
+              value: 'Name' 
+            }
+          ]
+        }]
+      }]
+    }
+  ],
   "description" : "#sd_p_13970104168"
 };
