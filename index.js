@@ -654,12 +654,10 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/AtomEntry' }
         },
-        /*
         facets: {
           type: 'array',
           items: { $ref: '#/definitions/Field' }
         }
-        */
       })
     },
     AtomGenerator: {
