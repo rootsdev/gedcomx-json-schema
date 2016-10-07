@@ -125,8 +125,7 @@ module.exports = {
         spatial: { $ref: '#/definitions/PlaceReference' },
         temporal: { $ref: '#/definitions/Date' },
         recordType: { type: 'string' }
-      }),
-      required: ['recordType']
+      })
     },
     Date: {
       type: 'object',
