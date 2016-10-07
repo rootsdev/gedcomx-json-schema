@@ -2186,13 +2186,13 @@ module.exports = {
     "identifiers" : {
       "http://gedcomx.org/Primary" : [ "https://familysearch.org/platform/records/collections/2000219" ]
     },
-    "coverage" : {
+    "coverage" : [ {
       "spatial" : {
         "original" : "United States",
         "description" : "#place_1"
       },
       "recordType" : "http://gedcomx.org/Census"
-    }
+    } ]
   }, {
     "id" : "src_r_22219954329",
     "citations" : [ {
@@ -2218,7 +2218,7 @@ module.exports = {
     },
     "created" : 1384063409514,
     "modified" : 1400310530955,
-    "coverage" : {
+    "coverage" : [ {
       "spatial" : {
         "original" : "Hempstead Town, Nassau, New York, United States"
       },
@@ -2227,7 +2227,7 @@ module.exports = {
         "formal" : "+1940"
       },
       "recordType" : "http://gedcomx.org/Census"
-    },
+    } ],
     "descriptor" : {
       "resource" : "https://familysearch.org/platform/records/collections/2000219#rd_MM9.1.9/MMMM-M5X"
     }

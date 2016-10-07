@@ -125,7 +125,8 @@ module.exports = {
         spatial: { $ref: '#/definitions/PlaceReference' },
         temporal: { $ref: '#/definitions/Date' },
         recordType: { type: 'string' }
-      })
+      }),
+      required: ['recordType']
     },
     Date: {
       type: 'object',
@@ -410,7 +411,10 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/ResourceReference' }
         },
-        coverage: { $ref: '#/definitions/Coverage' },
+        coverage: { 
+          type: 'array',
+          items: { $ref: '#/definitions/Coverage' }
+        },
         descriptions: {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' }
