@@ -622,6 +622,8 @@ module.exports = {
         links: { $ref: '#/definitions/Links' },
         published: { type: 'integer' },
         rights: { type: 'string' },
+        source: { $ref: '#/definitions/AtomSource' },
+        summary: { type: 'string' },
         score: { type: 'number' },
         title: { type: 'string' },
         updated: { type: 'integer' }
@@ -637,6 +639,10 @@ module.exports = {
         contributors: {
           type: 'array',
           items: { $ref: '#/definitions/AtomPerson' }
+        },
+        categories: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomCategory' }
         },
         generator: { $ref: '#/definitions/AtomGenerator' },
         icon: { type: 'string' },
@@ -673,6 +679,32 @@ module.exports = {
         name: { type: 'string' },
         uri: { type: 'string' },
         email: { type: 'string' }
+      })
+    },
+    AtomSource: {
+      type: 'object',
+      properties: merge(AtomCommonAttributes, {
+        authors: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomPerson' }
+        },
+        contributors: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomPerson' }
+        },
+        categories: {
+          type: 'array',
+          items: { $ref: '#/definitions/AtomCategory' }
+        },
+        generator: { $ref: '#/definitions/AtomGenerator' },
+        icon: { type: 'string' },
+        id: { type: 'string' },
+        links: { $ref: '#/definitions/Links' },
+        logo: { type: 'string' },
+        rights: { type: 'string' },
+        subtitle: { type: 'string' },
+        title: { type: 'string' },
+        updated: { type: 'integer' }
       })
     }
   }
