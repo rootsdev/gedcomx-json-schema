@@ -597,7 +597,6 @@ module.exports = {
     AtomContent: {
       type: 'object',
       properties: {
-        type: { type: 'string' },
         gedcomx: { $ref: '#/definitions/GedcomX' }
       }
     },
