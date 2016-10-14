@@ -1,72 +1,21 @@
-/**
- * Merge two objects into a new object. Does not modify either object.
- * http://stackoverflow.com/a/171256
- */
-function merge(obj1, obj2){
-  var obj3 = {}, attr;
-  for(attr in obj1){ obj3[attr] = obj1[attr]; }
-  for(attr in obj2){ obj3[attr] = obj2[attr]; }
-  return obj3;
-}
-
-// Here we list the definitions that will be extended below.
-var ExtensibleDataProperties = {
-    id: { type: 'string' },
-    fields: {
-      type: 'array',
-      items: { $ref: '#/definitions/Field' }
-    },
-    links: { $ref: '#/definitions/Links' }
-  },
-  
-  ConclusionProperties = merge(ExtensibleDataProperties, {
-    analysis: { $ref: '#/definitions/ResourceReference' },
-    attribution: { $ref: '#/definitions/Attribution' },
-    confidence: { type: 'string' },
-    id: { type: 'string' },
-    lang: { type: 'string' },
-    notes: {
-      type: 'array',
-      items: { $ref: '#/definitions/Note' }
-    },
-    sources: {
-      type: 'array',
-      items: { $ref: '#/definitions/SourceReference' }
-    },
-    sortKey: { type: 'string' }
-  }),
-  
-  SubjectProperties = merge(ConclusionProperties, {
-    evidence: {
-      type: 'array',
-      items: { $ref: '#/definitions/EvidenceReference' }
-    },
-    extracted: { type: 'boolean' },
-    identifiers: { $ref: '#/definitions/Identifiers' },
-    media: {
-      type: 'array',
-      items: { $ref: '#/definitions/SourceReference' }
-    }
-  }),
-  
-  AtomCommonAttributes = {
-    base: { type: 'string' },
-    lang: { type: 'string' }
-  };
-
-// The core definitions
 module.exports = {
   $schema: 'http://json-schema.org/draft-04/schema#',
+
+  // Possible root elements
   anyOf: [
     { $ref: '#/definitions/GedcomX' },
     { $ref: '#/definitions/AtomFeed' }
   ],
+  
   definitions: {
     
     // GedcomX Core Conceptual Model
     Address: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         city: { type: 'string' },
         country: { type: 'string' },
         postalCode: { type: 'string' },
@@ -78,11 +27,14 @@ module.exports = {
         street5: { type: 'string' },
         street6: { type: 'string' },
         value: { type: 'string' }
-      })
+      }
     },
     Agent: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         identifiers: { $ref: '#/definitions/Identifiers' },
         names: {
           type: 'array',
@@ -107,50 +59,87 @@ module.exports = {
           items: { $ref: '#/definitions/Address' }
         },
         person: { $ref: '#/definitions/ResourceReference' }
-      })
+      }
     },
     Attribution: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         contributor: { $ref: '#/definitions/ResourceReference' },
         modified: { type: 'integer' },
         changeMessage: { type: 'string' },
         creator: { $ref: '#/definitions/ResourceReference' },
         created: { type: 'integer' }
-      })
+      }
+    },
+    Conclusion: {
+      type: 'object',
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
+        analysis: { $ref: '#/definitions/ResourceReference' },
+        attribution: { $ref: '#/definitions/Attribution' },
+        confidence: { type: 'string' },
+        id: { type: 'string' },
+        lang: { type: 'string' },
+        notes: {
+          type: 'array',
+          items: { $ref: '#/definitions/Note' }
+        },
+        sources: {
+          type: 'array',
+          items: { $ref: '#/definitions/SourceReference' }
+        },
+        sortKey: { type: 'string' }
+      }
     },
     Coverage: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         spatial: { $ref: '#/definitions/PlaceReference' },
         temporal: { $ref: '#/definitions/Date' },
         recordType: { type: 'string' }
-      })
+      }
     },
     Date: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         original: { type: 'string' },
         formal: { type: 'string' },
         normalized: {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' }
         }
-      })
+      }
     },
     Document: {
       type: 'object',
-      properties: merge(ConclusionProperties, {
+      allOf: [
+        { $ref: '#/definitions/Conclusion' }
+      ],
+      properties: {
         type: { type: 'string' },
         extracted: { type: 'boolean' },
         textType: { type: 'string' },
         text: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' }
-      })
+      }
     },
     Event: {
       type: 'object',
-      properties: merge(SubjectProperties, {
+      allOf: [
+        { $ref: '#/definitions/Subject' }
+      ],
+      properties: {
         type: { type: 'string' },
         date: { $ref: '#/definitions/Date' },
         place: { $ref: '#/definitions/PlaceReference' },
@@ -158,27 +147,47 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/EventRole' }
         }
-      }),
+      },
     },
     EventRole: {
       type: 'object',
-      properties: merge(ConclusionProperties, {
+      allOf: [
+        { $ref: '#/definitions/Conclusion' }
+      ],
+      properties: {
         person: { $ref: '#/definitions/ResourceReference' },
         type: { type: 'string' },
         details: { type: 'string' }
-      })
+      }
     },
     EvidenceReference: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/Conclusion' }
+      ],
+      properties: {
         resource: { type: 'string' },
         resourceId: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' }
-      })
+      }
+    },
+    ExtensibleData: {
+      type: 'object',
+      properties: {
+        id: { type: 'string' },
+        fields: {
+          type: 'array',
+          items: { $ref: '#/definitions/Field' }
+        },
+        links: { $ref: '#/definitions/Links' }
+      }
     },
     Fact: {
       type: 'object',
-      properties: merge(ConclusionProperties, {
+      allOf: [
+        { $ref: '#/definitions/Conclusion' }
+      ],
+      properties: {
         type: { type: 'string' },
         date: { $ref: '#/definitions/Date' },
         place: { $ref: '#/definitions/PlaceReference' },
@@ -188,11 +197,14 @@ module.exports = {
           items: { $ref: '#/definitions/Qualifier' }
         },
         primary: { type: 'boolean' }
-      })
+      }
     },
     GedcomX: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         lang: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' }, 
         persons: {
@@ -232,13 +244,16 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/RecordDescriptor' }
         }
-      })
+      }
     },
     Gender: {
       type: 'object',
-      properties: merge(ConclusionProperties, {
+      allOf: [
+        { $ref: '#/definitions/Conclusion' }
+      ],
+      properties: {
         type: { type: 'string' }
-      })
+      }
     },
     Identifiers: {
       type: 'object',
@@ -253,7 +268,10 @@ module.exports = {
     },
     Name: {
       type: 'object',
-      properties: merge(ConclusionProperties, {
+      allOf: [
+        { $ref: '#/definitions/Conclusion' }
+      ],
+      properties: {
         type: { type: 'string' },
         date: { $ref: '#/definitions/Date' },
         nameForms: {
@@ -261,49 +279,64 @@ module.exports = {
           items: { $ref: '#/definitions/NameForm' }
         },
         preferred: { type: 'boolean' }
-      })
+      }
     },
     NameForm: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         lang: { type: 'string' },
         fullText: { type: 'string' },
         parts: {
           type: 'array',
           items: { $ref: '#/definitions/NamePart' }
         }
-      })
+      }
     },
     NamePart: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties:{
         type: { type: 'string' },
         value: { type: 'string' },
         qualifiers: {
           type: 'array',
           items: { $ref: '#/definitions/Qualifier' }
         }
-      })
+      }
     },
     Note: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         lang: { type: 'string' },
         subject: { type: 'string' },
         text: { type: 'string' },
         attribution: { $ref: '/#definitions/Attribution' }
-      })
+      }
     },
     OnlineAccount: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         serviceHomePage: { $ref: '#/definitions/ResourceReference' },
         accountName: { type: 'string' }
-      })
+      }
     },
     Person: {
       type: 'object',
-      properties: merge(SubjectProperties, {
+      allOf: [
+        { $ref: '#/definitions/Subject' }
+      ],
+      properties: {
         private: { type: 'boolean' },
         gender: { $ref: '#/definitions/Gender' },
         names: {
@@ -317,11 +350,14 @@ module.exports = {
         living: { type: 'boolean' },
         display: { $ref: '#/definitions/DisplayProperties' },
         principal: { type: 'boolean' }
-      })
+      }
     },
     PlaceDescription: {
       type: 'object',
-      properties: merge(SubjectProperties, {
+      allOf: [
+        { $ref: '#/definitions/Subject' }
+      ],
+      properties: {
         names: {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' }
@@ -333,18 +369,21 @@ module.exports = {
         longitude: { type: 'number' },
         temporalDescription: { $ref: '#/definitions/Date' },
         spatialDescription: { $ref: '#/definitions/ResourceReference' }
-      })
+      }
     },
     PlaceReference: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         original: { type: 'string' },
         description: { type: 'string' },
         normalized: {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' }
         }
-      })
+      }
     },
     Qualifier: {
       type: 'object',
@@ -356,7 +395,10 @@ module.exports = {
     },
     Relationship: {
       type: 'object',
-      properties: merge(SubjectProperties, {
+      allOf: [
+        { $ref: '#/definitions/Subject' }
+      ],
+      properties: {
         type: { type: 'string' },
         person1: { $ref: '#/definitions/ResourceReference' },
         person2: { $ref: '#/definitions/ResourceReference' },
@@ -364,7 +406,7 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/Fact' }
         }
-      })
+      }
     },
     ResourceReference: {
       type: 'object',
@@ -375,14 +417,20 @@ module.exports = {
     },
     SourceCitation: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         lang: { type: 'string' },
         value: { type: 'string' }
-      })
+      }
     },
     SourceDescription: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         resourceType: { type: 'string' },
         citations: {
           type: 'array',
@@ -426,18 +474,39 @@ module.exports = {
         sortKey: { type: 'string' },
         descriptor: { $ref: '#/definitions/ResourceReference' },
         version: { type: 'string' }
-      })
+      }
     },
     SourceReference: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         description: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' },
         qualifiers: {
           type: 'array',
           items: { $ref: '#/definitions/Qualifier' }
         }
-      })
+      }
+    },
+    Subject: {
+      type: 'object',
+      allOf: [
+        { $ref: '#/definitions/Conclusion' }
+      ],
+      properties: {
+        evidence: {
+          type: 'array',
+          items: { $ref: '#/definitions/EvidenceReference' }
+        },
+        extracted: { type: 'boolean' },
+        identifiers: { $ref: '#/definitions/Identifiers' },
+        media: {
+          type: 'array',
+          items: { $ref: '#/definitions/SourceReference' }
+        }
+      }
     },
     TextValue: {
       type: 'object',
@@ -506,7 +575,10 @@ module.exports = {
     // GedcomX Records
     Collection: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         lang: { type: 'string' },
         identifiers: { $ref: '#/definitions/Identifiers' },
         title: { type: 'string' },
@@ -516,51 +588,66 @@ module.exports = {
           items: { $ref: '#/definitions/CollectionContent' }
         },
         attribution: { $ref: '#/definitions/Attribution' }
-      })
+      }
     },
     CollectionContent: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         completeness: { type: 'number' },
         count: { type: 'integer' },
         resourceType: { type: 'string' }
-      }),
+      },
       required: ['resourceType']
     },
     Field: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         type: { type: 'string' },
         values: {
           type: 'array',
           items: { $ref: '#/definitions/FieldValue' }
         }
-      })
+      }
     },
     FieldValue: {
       type: 'object',
-      properties: merge(ConclusionProperties, {
+      allOf: [
+        { $ref: '#/definitions/Conclusion' }
+      ],
+      properties: {
         resource: { type: 'string' },
         dataType: { type: 'string' },
         type: { type: 'string' },
         labelId: { type: 'string' },
         status: { type: 'string' },
         text: { type: 'string' }
-      })
+      }
     },
     RecordDescriptor: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         lang: { type: 'string' },
         fields: {
           type: 'array',
           items: { $ref: '#/definitions/FieldDescriptor' }
         }
-      })
+      }
     },
     FieldDescriptor: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         originalLabel: { type: 'string' },
         descriptions: {
           type: 'array',
@@ -570,11 +657,14 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/FieldValueDescriptor' }
         }
-      })
+      }
     },
     FieldValueDescriptor: {
       type: 'object',
-      properties: merge(ExtensibleDataProperties, {
+      allOf: [
+        { $ref: '#/definitions/ExtensibleData' }
+      ],
+      properties: {
         optional: { type: 'boolean' },
         type: { type: 'string' },
         labelId: { type: 'string' },
@@ -582,17 +672,27 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/TextValue' }
         }
-      })
+      }
     },
     
     // Atom Extensions
     AtomCategory: {
       type: 'object',
-      properties: merge(AtomCommonAttributes, {
+      allOf: [
+        { $ref: '#/definitions/AtomCommon' }
+      ],
+      properties: {
         scheme: { type: 'string' },
         term: { type: 'string' },
         label: { type: 'string' }
-      })
+      }
+    },
+    AtomCommon: {
+      type: 'object',
+      properties: {
+        base: { type: 'string' },
+        lang: { type: 'string' }
+      }
     },
     AtomContent: {
       type: 'object',
@@ -602,7 +702,10 @@ module.exports = {
     },
     AtomEntry: {
       type: 'object',
-      properties: merge(AtomCommonAttributes, {
+      allOf: [
+        { $ref: '#/definitions/AtomCommon' }
+      ],
+      properties: {
         authors: {
           type: 'array',
           items: { $ref: '#/definitions/AtomPerson' }
@@ -626,11 +729,14 @@ module.exports = {
         score: { type: 'number' },
         title: { type: 'string' },
         updated: { type: 'integer' }
-      })
+      }
     },
     AtomFeed: {
       type: 'object',
-      properties: merge(AtomCommonAttributes, {
+      allOf: [
+        { $ref: '#/definitions/AtomCommon' }
+      ],
+      properties: {
         authors: {
           type: 'array',
           items: { $ref: '#/definitions/AtomPerson' }
@@ -662,27 +768,36 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/Field' }
         }
-      })
+      }
     },
     AtomGenerator: {
       type: 'object',
-      properties: merge(AtomCommonAttributes, {
+      allOf: [
+        { $ref: '#/definitions/AtomCommon' }
+      ],
+      properties: {
         uri: { type: 'string' },
         version: { type: 'string' },
         value: { type: 'string' }
-      })
+      }
     },
     AtomPerson: {
       type: 'object',
-      properties: merge(AtomCommonAttributes, {
+      allOf: [
+        { $ref: '#/definitions/AtomCommon' }
+      ],
+      properties: {
         name: { type: 'string' },
         uri: { type: 'string' },
         email: { type: 'string' }
-      })
+      }
     },
     AtomSource: {
       type: 'object',
-      properties: merge(AtomCommonAttributes, {
+      allOf: [
+        { $ref: '#/definitions/AtomCommon' }
+      ],
+      properties: {
         authors: {
           type: 'array',
           items: { $ref: '#/definitions/AtomPerson' }
@@ -704,7 +819,7 @@ module.exports = {
         subtitle: { type: 'string' },
         title: { type: 'string' },
         updated: { type: 'integer' }
-      })
+      }
     }
   }
 };
