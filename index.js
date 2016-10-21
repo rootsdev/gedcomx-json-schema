@@ -368,7 +368,8 @@ module.exports = {
         latitude: { type: 'number' },
         longitude: { type: 'number' },
         temporalDescription: { $ref: '#/definitions/Date' },
-        spatialDescription: { $ref: '#/definitions/ResourceReference' }
+        spatialDescription: { $ref: '#/definitions/ResourceReference' },
+        display: { $ref: '#/definitions/PlaceDisplayProperties' }
       }
     },
     PlaceReference: {
@@ -569,6 +570,14 @@ module.exports = {
           type: 'array',
           items: { $ref: '#/definitions/ResourceReference' }
         }
+      }
+    },
+    PlaceDisplayProperties: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        fullName: { type: 'string' },
+        type: { type: 'string' }
       }
     },
     
