@@ -484,6 +484,7 @@ module.exports = {
       ],
       properties: {
         description: { type: 'string' },
+        descriptionId: { type: 'string' },
         attribution: { $ref: '#/definitions/Attribution' },
         qualifiers: {
           type: 'array',
