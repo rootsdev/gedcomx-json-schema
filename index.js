@@ -318,7 +318,7 @@ module.exports = {
         lang: { type: 'string' },
         subject: { type: 'string' },
         text: { type: 'string' },
-        attribution: { $ref: '/#definitions/Attribution' }
+        attribution: { $ref: '#/definitions/Attribution' }
       }
     },
     OnlineAccount: {
