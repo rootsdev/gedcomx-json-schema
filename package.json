@@ -1,6 +1,6 @@
 {
   "name": "gedcomx-json-schema",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "JSON Schema for GEDCOM X",
   "main": "index.js",
   "scripts": {
